@@ -10,7 +10,7 @@ form {
     width: 600px;
     text-align: center;
     border: 1px Solid black;
-    background-color: aliceblue;
+    background-color:lightgray;
 }
 
 form>p{
@@ -26,4 +26,8 @@ input{
 }
 .alert{
     color: red;
+}
+
+.check{
+    color:orangered
 }
