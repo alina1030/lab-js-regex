@@ -1,114 +1,96 @@
-/* Fill your code*/
-const pattern={
-    username: /^[a-zA-Z]{8,15}+$/,
-    email: /^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@{[a-zA-Z0-9_\-\.]+0\.([a-zA-Z]{2,5}){1,25})+)*$/,
-    password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()]).{8,20}$/,
-    phone:/^\d{10}$/,
-    address:/^[a-zA-Z0-9]$/,
-    cpassword:/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()]).{8,20}$/,
-}
-
-
-function formValidate()
-{
-    var name = document.forms["RegForm"]["Name"];
-    var address = document.forms["RegForm"]["Address"];
-    var email = document.forms["RegForm"]["EMail"];
-    var password = document.forms["RegForm"]["Password"];
-    var cpassword = document.forms["RegForm"]["cPassword"];
-    var phone = document.forms["RegForm"]["phone"];
-
-    var name1 = document.getElementById("name");
-    var address1 = document.getElementById("address");
-    var email1 = document.getElementById("email");
-    var password1 = document.getElementById("pwd");
-    var cpassword1 = document.getElementById("cpwd");
-    var phone1 = document.getElementById("phone");
-    var result = document.getElementById("result");
+function formValidate() {
+    let name = document.forms["RegForm"]["Name"];
+    let address = document.forms["RegForm"]["Address"];
+    let email = document.forms["RegForm"]["EMail"];
+    let pwd = document.forms["RegForm"]["Password"];
+    let cpwd = document.forms["RegForm"]["cPassword"];
+    let phone = document.forms["RegForm"]["phone"];
+    let done = document.forms["RegForm"]["Submit"];
     
-    //name validation
-    if(pattern.username.test(name.value)=="")
-    {
-        name1.textContent="Kindly enter the name";
-        name.focus();
-        
-    }
-    else if(pattern.username.test(name.value)){
-        name1.textContent="";
-    }
-    else
-    {
-        name1.textContent="Atleast 8 to 15 characters";
+    let errorname = document.getElementById("name");
+    let erroraddress = document.getElementById("address");
+    let erroremail = document.getElementById("email");
+    let errorpwd = document.getElementById("pwd");
+    let errorcpwd = document.getElementById("cpwd");
+    let errorphone = document.getElementById("phone");
+    let submit = document.getElementById("done");
+
+    if (name.value == "") {
+        errorname.innerHTML = "Please fill name";
         name.focus();
         return false;
+    } else if (name.value.length < 8 || name.value.length > 15) {
+        errorname.innerHTML = "Atleast 8 to 15 characters is required";
+        name.focus();
+        return false;
+    } else {
+        errorname.innerHTML = "";
     }
-    //email validation
-    if(email.value==""){
-        email1.textContent="Email cannot be empty. Kindly fill email";
+
+    if (address.value == "") {
+        erroraddress.innerHTML = "Kindly fill the Address field";
+        address.focus();
+        return false;
+    } else {
+        erroraddress.innerHTML = "";
+    }
+
+    if (email.value == "") {
+        erroremail.innerHTML = "Kindly fill Email field";
+        email.focus();
+        return false;
+    } else if (/^[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email.value)) {
+        erroremail.innerHTML = "";
+    } else {
+        erroremail.innerHTML = "Enter a valid Email";
         email.focus();
         return false;
     }
-    else if(pattern.email.test(email.value)){
-        email1.textContent="";
-    }
-    else{
-        email1.textContent="Enter a vaild Email.Email should contain @, .(dot) or underscore.";
-        email.focus();
+
+    if (pwd.value == "") {
+        errorpwd.innerHTML = "Kindly fill Password field";
+        pwd.focus();
         return false;
-    }
-    
-    //password validation
-    if(password.value==""){
-        password1.textContent="Kindly fill password field";
-        password.focus();
-        return false;
-    }
-    else if(pattern.password.test(password.value)){
-        password1.textContent="";
-    }
-    else{
-        password1.textContent="password must contain 1 uppercase letter, 1 lowercase letter, atleast 1 number.password must contain the following special characters !@#$%^&*()";
-        password.focus();
+    } else if (
+        /^(?=.*[0-9])(?=.*[!@#$%&*])[a-zA-Z0-9!@#$%&*]{7,15}$/.test(pwd.value)
+    ) {
+        errorpwd.innerHTML = "";
+    } else {
+        errorpwd.innerHTML =
+            "Password must contain 1 uppercase letter, 1 lowercase letter, atleast 1 number any symbols";
+        pwd.focus();
         return false;
     }
 
-    //cpassword validation
-    if(cpassword.value==""){
-        cpassword1.textContent="Kindly fill password field";
-        password.focus();
+    if (cpwd.value == "") {
+        errorcpwd.innerText = "Kindly fill this field";
+        cpwd.focus();
+        return false;
+    } else if (cpwd.value == pwd.value) {
+        errorcpwd.innerText = "";
+    } else {
+        errorcpwd.innerText = "Password and Confirm Password should be same";
+        cpwd.focus();
         return false;
     }
-    else (pattern.cpassword.test(cpassword.value))
-    {
-        cpassword1.textContent="";
-    }
-    
-    //phone validation
-    if(phone.value==""){
-        phone1.textContent="Kindly fill phone number";
+
+    if (phone.value == "") {
+        errorphone.innerHTML = "Kindly fill phone number field";
+        phone.focus();
+        return false;
+    } else if (phone.value.length < 10 || phone.value.length > 10) {
+        errorphone.innerHTML = "Phone number field should contain 10 digits";
+        phone.focus();
+        return false;
+    } else if (phone.value.match(/(?=.*\d[0-9])/)) 
+         errorphone.innerHTML = "";
+    else {
+        errorphone.innerHTML = "Kindly fill valid phone number";
         phone.focus();
         return false;
     }
-    else if(pattern.phone.test(phone.value)){
-        phone1.textContent="";
-    }
-    else{
-        phone1.textContent="phone number should be a ten digit number";
-        phone.focus();
-        return false;
-    }
-
-    //address validation
-    if(address.value==""){
-        address.textContent="Kindly fill address";
-        password.focus();
-        return false;
-    }
-    else (pattern.address.test(address.value))
-    {
-        address1.textContent="";
-    }
-    
-
-
+   
+    submit.innerHTML = "Regex Validation Success";
+    done.focus();
+    return false;
 }
